@@ -5,8 +5,19 @@
       class="messenger__message"
       [innerHTML]="message.text_html"
     ></div>
+    <div
+      *ngIf="
+        isQuestionMessage(message) &&
+        (activeQuestionId$ | async) !== message.question_id
+      "
+      class="messenger__message"
+      [innerHTML]="message.name_html"
+    ></div>
     <app-question-answers
-      *ngIf="isQuestionMessage(message)"
+      *ngIf="
+        isQuestionMessage(message) &&
+        (activeQuestionId$ | async) === message.question_id
+      "
       [message]="message"
       (onSubmit)="submitAnswers(message, $event)"
     ></app-question-answers>

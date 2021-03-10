@@ -7,6 +7,7 @@ import { updateAuthGrant } from 'src/app/state/auth.actions';
 import { createAnswerMessage } from '../../lib';
 import { sendMessage } from '../../state/conversation.actions';
 import {
+  selectActiveQuestionId,
   selectIsDone,
   selectMessages,
 } from '../../state/conversation.selectors';
@@ -23,6 +24,9 @@ export class MessengerPageComponent implements OnInit {
   isStatementMessage = isStatementMessage;
 
   messages$: Observable<ReceivedMessage[]> = this.store.select(selectMessages);
+  activeQuestionId$: Observable<string | null> = this.store.select(
+    selectActiveQuestionId,
+  );
   isDone$: Observable<boolean> = this.store.select(selectIsDone);
 
   constructor(private route: ActivatedRoute, private store: Store<AppState>) {}

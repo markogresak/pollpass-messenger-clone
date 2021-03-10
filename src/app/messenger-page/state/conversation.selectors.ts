@@ -12,6 +12,11 @@ export const selectMessages = createSelector(
   (state) => state.messages,
 );
 
+export const selectActiveQuestionId = createSelector(
+  selectConversationState,
+  (state) => state.activeQuestionId,
+);
+
 export const selectIsDone = createSelector(
   selectConversationState,
   (state) => state.isDone,

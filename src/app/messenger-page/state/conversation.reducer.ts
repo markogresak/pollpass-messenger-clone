@@ -1,16 +1,22 @@
 import { createReducer, on } from '@ngrx/store';
-import { ReceivedMessage } from '../types';
-import { isHeartbeatMessage, isHistoryMessage } from '../types/guards';
+import { QuestionMessage, ReceivedMessage } from '../types';
+import {
+  isHeartbeatMessage,
+  isHistoryMessage,
+  isQuestionMessage,
+} from '../types/guards';
 import { goodBye, addMessage, addHistory } from './conversation.actions';
 
 export const conversationFeatureKey = 'conversation';
 
 export interface State {
-  messages: ReceivedMessage[];
+  activeQuestionId: string | null;
   isDone: boolean;
+  messages: ReceivedMessage[];
 }
 
 export const initialState: State = {
+  activeQuestionId: null,
   messages: [],
   isDone: false,
 };
@@ -19,6 +25,7 @@ export const reducer = createReducer(
   initialState,
   on(addHistory, (state, { message }) => ({
     ...state,
+    activeQuestionId: getActiveQuestionId(message.messages),
     messages: message.messages,
   })),
   on(addMessage, (state, { message }) => {
@@ -27,9 +34,12 @@ export const reducer = createReducer(
       return state;
     }
 
+    const messages = [...state.messages, message];
+
     return {
       ...state,
-      messages: [...state.messages, message],
+      activeQuestionId: getActiveQuestionId(messages),
+      messages,
     };
   }),
   on(goodBye, (state) => ({
@@ -37,3 +47,11 @@ export const reducer = createReducer(
     isDone: true,
   })),
 );
+
+const getActiveQuestionId = (messages: ReceivedMessage[]): string | null => {
+  const lastMessage = messages[messages.length - 1];
+  if (isQuestionMessage(lastMessage)) {
+    return lastMessage.question_id;
+  }
+  return null;
+};
