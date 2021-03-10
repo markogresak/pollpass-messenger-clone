@@ -41,6 +41,7 @@ describe('AuthService', () => {
       .expectOne(`${environment.apiBase}/auth/magic_link/${id}`)
       .flush(mockMagicLinkResponse);
 
-    expect(actualResponse!).toEqual(mockMagicLinkResponse);
+    // @ts-ignore
+    expect(actualResponse).toEqual(mockMagicLinkResponse);
   });
 });

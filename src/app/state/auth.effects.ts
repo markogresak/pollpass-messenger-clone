@@ -15,43 +15,35 @@ import {
 export class AuthEffects {
   private static readonly AUTH_GRANT_KEY = 'authGrant';
 
-  updateAuthGrant$ = this.getUpdateAuthGrant();
+  updateAuthGrant$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateAuthGrant),
+      exhaustMap((action) =>
+        this.getAuthGrant(action.id).pipe(
+          map((authGrant) => updateAuthGrantSuccess({ authGrant })),
+          catchError((error) => of(updateAuthGrantFailure({ error }))),
+        ),
+      ),
+    ),
+  );
 
-  updateAuthGrantSuccess$ = this.getUpdateAuthGrantSuccess();
+  updateAuthGrantSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(updateAuthGrantSuccess),
+        exhaustMap((action) => {
+          this.storage.set(AuthEffects.AUTH_GRANT_KEY, action.authGrant);
+          return of(undefined);
+        }),
+      ),
+    { dispatch: false },
+  );
 
   constructor(
     private actions$: Actions,
     private auth: AuthService,
     private storage: StorageService<AuthGrant>,
   ) {}
-
-  private getUpdateAuthGrant() {
-    return createEffect(() =>
-      this.actions$.pipe(
-        ofType(updateAuthGrant),
-        exhaustMap((action) =>
-          this.getAuthGrant(action.id).pipe(
-            map((authGrant) => updateAuthGrantSuccess({ authGrant })),
-            catchError((error) => of(updateAuthGrantFailure({ error }))),
-          ),
-        ),
-      ),
-    );
-  }
-
-  private getUpdateAuthGrantSuccess() {
-    return createEffect(
-      () =>
-        this.actions$.pipe(
-          ofType(updateAuthGrantSuccess),
-          exhaustMap((action) => {
-            this.storage.set(AuthEffects.AUTH_GRANT_KEY, action.authGrant);
-            return of(undefined);
-          }),
-        ),
-      { dispatch: false },
-    );
-  }
 
   private getAuthGrant(id: string): Observable<AuthGrant> {
     const storedAuthGrant = this.storage.get(AuthEffects.AUTH_GRANT_KEY);
