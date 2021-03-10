@@ -1,22 +1,21 @@
 import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
 
-import { AppEffects } from './app.effects';
+import { AuthEffects } from './auth.effects';
 
-describe('AppEffects', () => {
+describe('AuthEffects', () => {
   let actions$: Observable<any>;
-  let effects: AppEffects;
+  let effects: AuthEffects;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        AppEffects,
-        provideMockActions(() => actions$)
-      ]
+      imports: [HttpClientTestingModule],
+      providers: [AuthEffects, provideMockActions(() => actions$)],
     });
 
-    effects = TestBed.inject(AppEffects);
+    effects = TestBed.inject(AuthEffects);
   });
 
   it('should be created', () => {
