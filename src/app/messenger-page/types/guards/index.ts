@@ -1,1 +1,8 @@
-export { isReceivedMessage, isHistoryMessage } from './is-received-message';
+export {
+  isAnswerViewMessage,
+  isHeartbeatMessage,
+  isHistoryMessage,
+  isQuestionMessage,
+  isReceivedMessage,
+  isStatementMessage,
+} from './is-received-message';
