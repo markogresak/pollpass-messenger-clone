@@ -1,0 +1,18 @@
+<div class="messenger">
+  <ng-container *ngFor="let message of messages$ | async; last as isLast">
+    <div
+      *ngIf="isStatementMessage(message)"
+      class="messenger__message"
+      [innerHTML]="message.text_html"
+    ></div>
+
+    <div
+      class="messenger__message messenger__message--loading"
+      *ngIf="isLast && isStatementMessage(message)"
+    >
+      <span class="messenger__loading-dot"></span>
+      <span class="messenger__loading-dot"></span>
+      <span class="messenger__loading-dot"></span>
+    </div>
+  </ng-container>
+</div>

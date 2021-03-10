@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { AppState } from '../../state';
-import { updateAuthGrant } from '../../state/auth.actions';
-import { selectMessages } from '../state/conversation.selectors';
-import { ReceivedMessage } from '../types';
+import { AppState } from 'src/app/state';
+import { updateAuthGrant } from 'src/app/state/auth.actions';
+import { selectMessages } from '../../state/conversation.selectors';
+import { ReceivedMessage } from '../../types';
+import { isStatementMessage } from '../../types/guards';
 
 @Component({
   selector: 'app-messenger-page',
@@ -13,6 +14,8 @@ import { ReceivedMessage } from '../types';
   styleUrls: ['./messenger-page.component.scss'],
 })
 export class MessengerPageComponent implements OnInit {
+  isStatementMessage = isStatementMessage;
+
   messages$: Observable<ReceivedMessage[]> = this.store.select(selectMessages);
 
   constructor(private route: ActivatedRoute, private store: Store<AppState>) {}
