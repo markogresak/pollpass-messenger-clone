@@ -15,6 +15,8 @@ export const addMessageFailure = createAction(
   props<{ error: any }>(),
 );
 
+export const goodBye = createAction('[Conversation] Good Bye');
+
 export const sendMessage = createAction(
   '[Conversation] Send Message',
   props<{ message: SentMessage }>(),

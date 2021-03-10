@@ -34,8 +34,13 @@ export interface HistoryMessage extends BaseMessage<'History'> {
   size: number;
 }
 
+export interface GoodByeMessage extends BaseMessage<'GoodBye'> {
+  redirect_url: string;
+}
+
 export type ReceivedMessage =
   | AnswerViewMessage
+  | GoodByeMessage
   | HeartbeatMessage
   | HistoryMessage
   | QuestionMessage

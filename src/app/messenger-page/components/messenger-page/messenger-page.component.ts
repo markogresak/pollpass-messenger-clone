@@ -6,7 +6,10 @@ import { AppState } from 'src/app/state';
 import { updateAuthGrant } from 'src/app/state/auth.actions';
 import { createAnswerMessage } from '../../lib';
 import { sendMessage } from '../../state/conversation.actions';
-import { selectMessages } from '../../state/conversation.selectors';
+import {
+  selectIsDone,
+  selectMessages,
+} from '../../state/conversation.selectors';
 import { QuestionMessage, ReceivedMessage, SentAnswer } from '../../types';
 import { isQuestionMessage, isStatementMessage } from '../../types/guards';
 
@@ -20,6 +23,7 @@ export class MessengerPageComponent implements OnInit {
   isStatementMessage = isStatementMessage;
 
   messages$: Observable<ReceivedMessage[]> = this.store.select(selectMessages);
+  isDone$: Observable<boolean> = this.store.select(selectIsDone);
 
   constructor(private route: ActivatedRoute, private store: Store<AppState>) {}
 

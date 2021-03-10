@@ -29,8 +29,13 @@ export class ConversationService implements OnDestroy {
       .pipe(filter(isReceivedMessage), takeUntil(this.destroyed$));
   }
 
-  ngOnDestroy(): void {
+  close(): void {
     this.destroyed$.next();
+    this.websocket.close();
+  }
+
+  ngOnDestroy(): void {
+    this.close();
   }
 
   send(data: SentMessage): void {

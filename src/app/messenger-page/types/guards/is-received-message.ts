@@ -1,5 +1,6 @@
 import {
   AnswerViewMessage,
+  GoodByeMessage,
   HeartbeatMessage,
   HistoryMessage,
   QuestionMessage,
@@ -9,6 +10,9 @@ import {
 
 export const isAnswerViewMessage = (value: any): value is AnswerViewMessage =>
   value?.kind === 'AnswerView';
+
+export const isGoodByeMessage = (value: any): value is GoodByeMessage =>
+  value?.kind === 'GoodBye';
 
 export const isHeartbeatMessage = (value: any): value is HeartbeatMessage =>
   value?.kind === 'Heartbeat';
@@ -24,6 +28,7 @@ export const isStatementMessage = (value: any): value is StatementMessage =>
 
 export const isReceivedMessage = (value: any): value is ReceivedMessage =>
   isAnswerViewMessage(value) ||
+  isGoodByeMessage(value) ||
   isHeartbeatMessage(value) ||
   isHistoryMessage(value) ||
   isQuestionMessage(value) ||

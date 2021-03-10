@@ -11,3 +11,8 @@ export const selectMessages = createSelector(
   selectConversationState,
   (state) => state.messages,
 );
+
+export const selectIsDone = createSelector(
+  selectConversationState,
+  (state) => state.isDone,
+);

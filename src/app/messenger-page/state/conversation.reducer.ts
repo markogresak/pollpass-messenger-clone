@@ -1,16 +1,18 @@
-import { Action, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import { ReceivedMessage } from '../types';
 import { isHeartbeatMessage, isHistoryMessage } from '../types/guards';
-import { addMessage } from './conversation.actions';
+import { goodBye, addMessage } from './conversation.actions';
 
 export const conversationFeatureKey = 'conversation';
 
 export interface State {
   messages: ReceivedMessage[];
+  isDone: boolean;
 }
 
 export const initialState: State = {
   messages: [],
+  isDone: false,
 };
 
 export const reducer = createReducer(
@@ -33,4 +35,8 @@ export const reducer = createReducer(
       messages: [...state.messages, message],
     };
   }),
+  on(goodBye, (state) => ({
+    ...state,
+    isDone: true,
+  })),
 );

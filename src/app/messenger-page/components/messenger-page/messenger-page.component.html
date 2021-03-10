@@ -13,7 +13,7 @@
 
     <div
       class="messenger__message messenger__message--loading"
-      *ngIf="isLast && isStatementMessage(message)"
+      *ngIf="isLast && isStatementMessage(message) && !(isDone$ | async)"
     >
       <span class="messenger__loading-dot"></span>
       <span class="messenger__loading-dot"></span>
