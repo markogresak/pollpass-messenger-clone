@@ -1,21 +1,36 @@
-<form [formGroup]="answersForm" (ngSubmit)="handleSubmit()">
+<form [formGroup]="answersForm" (ngSubmit)="handleSubmit($event)">
   <div class="question-answers__title" [innerHTML]="message.name_html"></div>
 
-  <mat-radio-group
-    *ngIf="isRadioQuestion"
-    formControlName="answers"
-    required
-    color="primary"
-  >
-    <mat-radio-button
-      *ngFor="let option of message.question_options"
-      id="{{ option.id }}"
-      value="{{ option.id }}"
-      class="question-answers__answer-option"
+  <section>
+    <mat-radio-group
+      *ngIf="isRadioQuestion"
+      formControlName="radioAnswer"
+      required
+      color="primary"
     >
-      <div [innerHTML]="option.name_html"></div>
-    </mat-radio-button>
-  </mat-radio-group>
+      <mat-radio-button
+        *ngFor="let option of message.question_options"
+        id="{{ option.id }}"
+        value="{{ option.id }}"
+        class="question-answers__answer-option"
+      >
+        <div [innerHTML]="option.name_html"></div>
+      </mat-radio-button>
+    </mat-radio-group>
+
+    <ng-container *ngIf="isMultipleQuestion" formArrayName="multipleAnswers">
+      <mat-checkbox
+        *ngFor="let option of message.question_options; index as index"
+        [formControlName]="index"
+        id="{{ option.id }}"
+        value="{{ option.id }}"
+        class="question-answers__answer-option question-answers__answer-option--inline"
+        color="primary"
+      >
+        <div [innerHTML]="option.name_html"></div>
+      </mat-checkbox>
+    </ng-container>
+  </section>
 
   <div
     class="question-answers__submit-container"
