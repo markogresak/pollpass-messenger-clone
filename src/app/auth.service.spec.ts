@@ -5,10 +5,10 @@ import {
 } from '@angular/common/http/testing';
 
 import { AuthService } from './auth.service';
-import { MagicLinkResponse } from './magic-link-response';
+import { AuthGrant } from './types';
 import { environment } from 'src/environments/environment';
 
-const mockMagicLinkResponse: MagicLinkResponse = {
+const mockMagicLinkResponse: AuthGrant = {
   access_token: 'some-access-token',
   token_type: 'Bearer',
   expires_in: 21600,
@@ -32,8 +32,8 @@ describe('AuthService', () => {
   it('should call magic_link endpoint with given id and return the magic link response', () => {
     const id = 'abc123';
 
-    let actualResponse: MagicLinkResponse | null = null;
-    service.createMagicLink(id).subscribe((response: MagicLinkResponse) => {
+    let actualResponse: AuthGrant | null = null;
+    service.createMagicLink(id).subscribe((response: AuthGrant) => {
       actualResponse = response;
     });
 

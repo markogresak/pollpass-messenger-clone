@@ -1,4 +1,4 @@
-export interface MagicLinkResponse {
+export interface AuthGrant {
   access_token: string;
   /**
    * UNIX timestamp (in seconds)
