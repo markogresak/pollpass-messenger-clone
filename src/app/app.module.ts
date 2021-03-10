@@ -5,12 +5,12 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MessengerPageComponent } from './messenger-page/messenger-page.component';
 import { reducers, metaReducers } from './state';
 import { AuthEffects } from './state/auth.effects';
-import { environment } from '../environments/environment';
+import { MessengerPageComponent, ConversationEffects } from './messenger-page';
 
 @NgModule({
   declarations: [AppComponent, MessengerPageComponent],
@@ -19,7 +19,7 @@ import { environment } from '../environments/environment';
     AppRoutingModule,
     HttpClientModule,
     StoreModule.forRoot(reducers, { metaReducers }),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, ConversationEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   providers: [],

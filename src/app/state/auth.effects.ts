@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
-import { catchError, exhaustMap, map, mergeMap } from 'rxjs/operators';
+import { catchError, exhaustMap, map } from 'rxjs/operators';
 import { AuthService } from '../auth.service';
 import { StorageService } from '../storage.service';
 import { AuthGrant } from '../types';
@@ -16,6 +16,7 @@ export class AuthEffects {
   private static readonly AUTH_GRANT_KEY = 'authGrant';
 
   updateAuthGrant$ = this.getUpdateAuthGrant();
+
   updateAuthGrantSuccess$ = this.getUpdateAuthGrantSuccess();
 
   constructor(

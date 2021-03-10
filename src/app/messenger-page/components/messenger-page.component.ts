@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { ConversationService } from '../conversation.service';
-import { AppState } from '../state';
-import { updateAuthGrant } from '../state/auth.actions';
+import { Observable } from 'rxjs';
+import { AppState } from '../../state';
+import { updateAuthGrant } from '../../state/auth.actions';
+import { selectMessages } from '../state/conversation.selectors';
+import { ReceivedMessage } from '../types';
 
 @Component({
   selector: 'app-messenger-page',
@@ -11,11 +13,9 @@ import { updateAuthGrant } from '../state/auth.actions';
   styleUrls: ['./messenger-page.component.scss'],
 })
 export class MessengerPageComponent implements OnInit {
-  constructor(
-    private route: ActivatedRoute,
-    private store: Store<AppState>,
-    private conversation: ConversationService,
-  ) {}
+  messages$: Observable<ReceivedMessage[]> = this.store.select(selectMessages);
+
+  constructor(private route: ActivatedRoute, private store: Store<AppState>) {}
 
   ngOnInit(): void {
     const id = this.getRouteId();
@@ -25,11 +25,9 @@ export class MessengerPageComponent implements OnInit {
     }
   }
 
-  getMessages(): string[] {
-    return this.conversation
-      .getMessages()
-      .filter((message) => message.kind !== 'Heartbeat')
-      .map((message) => JSON.stringify(message, null, 2));
+  getText(message: any): string {
+    // HACK: this is temporary testing code
+    return message.text_html || message.name_html;
   }
 
   private getRouteId(): string | null {

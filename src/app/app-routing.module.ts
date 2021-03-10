@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MessengerPageComponent } from './messenger-page/messenger-page.component';
+import { MessengerPageComponent } from './messenger-page';
 
 const routes: Routes = [{ path: 'm/:id', component: MessengerPageComponent }];
 
