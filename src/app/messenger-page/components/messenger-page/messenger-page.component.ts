@@ -11,8 +11,17 @@ import {
   selectIsDone,
   selectMessages,
 } from '../../state/conversation.selectors';
-import { QuestionMessage, ReceivedMessage, SentAnswer } from '../../types';
-import { isQuestionMessage, isStatementMessage } from '../../types/guards';
+import {
+  AnswerViewMessage,
+  QuestionMessage,
+  ReceivedMessage,
+  SentAnswer,
+} from '../../types';
+import {
+  isQuestionMessage,
+  isStatementMessage,
+  isAnswerViewMessage,
+} from '../../types/guards';
 
 @Component({
   selector: 'app-messenger-page',
@@ -20,6 +29,7 @@ import { isQuestionMessage, isStatementMessage } from '../../types/guards';
   styleUrls: ['./messenger-page.component.scss'],
 })
 export class MessengerPageComponent implements OnInit {
+  isAnswerViewMessage = isAnswerViewMessage;
   isQuestionMessage = isQuestionMessage;
   isStatementMessage = isStatementMessage;
 
@@ -45,6 +55,10 @@ export class MessengerPageComponent implements OnInit {
         message: createAnswerMessage(message.question_id, answers),
       }),
     );
+  }
+
+  getAnswerHtml(message: AnswerViewMessage): string {
+    return message.answers.map((answer) => answer.text_html).join('');
   }
 
   private getRouteId(): string | null {

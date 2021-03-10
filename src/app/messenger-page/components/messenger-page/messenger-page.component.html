@@ -21,6 +21,11 @@
       [message]="message"
       (onSubmit)="submitAnswers(message, $event)"
     ></app-question-answers>
+    <div
+      *ngIf="isAnswerViewMessage(message)"
+      class="messenger__message messenger__message--response"
+      [innerHTML]="getAnswerHtml(message)"
+    ></div>
 
     <div
       class="messenger__message messenger__message--loading"

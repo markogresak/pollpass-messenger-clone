@@ -12,7 +12,7 @@
     border-radius: 0.125rem 1.25rem 1.25rem 1.25rem;
     animation: pop 0.5s cubic-bezier(0.5, -0.3, 0.7, 0.05);
 
-    &::ng-deep p:last-child {
+    &::ng-deep p {
       margin-bottom: 0;
     }
 
