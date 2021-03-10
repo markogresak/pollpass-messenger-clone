@@ -1,0 +1,26 @@
+<form [formGroup]="answersForm" (ngSubmit)="onSubmit()">
+  <div class="question-answers__title" [innerHTML]="message.name_html"></div>
+
+  <mat-radio-group
+    *ngIf="isRadioQuestion"
+    formControlName="options"
+    required
+    color="primary"
+  >
+    <mat-radio-button
+      *ngFor="let option of message.question_options"
+      id="{{ option.id }}"
+      value="{{ option.id }}"
+      class="question-answers__answer-option"
+    >
+      <div [innerHTML]="option.name_html"></div>
+    </mat-radio-button>
+  </mat-radio-group>
+
+  <div
+    class="question-answers__submit-container"
+    *ngIf="answersForm.dirty && answersForm.valid"
+  >
+    <button mat-flat-button color="primary" type="submit">Submit</button>
+  </div>
+</form>

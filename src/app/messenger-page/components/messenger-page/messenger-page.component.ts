@@ -6,7 +6,7 @@ import { AppState } from 'src/app/state';
 import { updateAuthGrant } from 'src/app/state/auth.actions';
 import { selectMessages } from '../../state/conversation.selectors';
 import { ReceivedMessage } from '../../types';
-import { isStatementMessage } from '../../types/guards';
+import { isQuestionMessage, isStatementMessage } from '../../types/guards';
 
 @Component({
   selector: 'app-messenger-page',
@@ -14,6 +14,7 @@ import { isStatementMessage } from '../../types/guards';
   styleUrls: ['./messenger-page.component.scss'],
 })
 export class MessengerPageComponent implements OnInit {
+  isQuestionMessage = isQuestionMessage;
   isStatementMessage = isStatementMessage;
 
   messages$: Observable<ReceivedMessage[]> = this.store.select(selectMessages);

@@ -5,6 +5,10 @@
       class="messenger__message"
       [innerHTML]="message.text_html"
     ></div>
+    <app-question-answers
+      *ngIf="isQuestionMessage(message)"
+      [message]="message"
+    ></app-question-answers>
 
     <div
       class="messenger__message messenger__message--loading"

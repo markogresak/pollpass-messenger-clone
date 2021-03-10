@@ -1,0 +1,23 @@
+.question-answers {
+  &__title {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1c2338;
+  }
+
+  &__answer-option {
+    display: block;
+    padding: 0.5rem 0;
+
+    &::ng-deep p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__submit-container {
+    margin-top: 1rem;
+    text-align: center;
+  }
+}
