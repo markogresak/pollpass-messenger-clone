@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { QuestionMessage } from '../../types';
+import { QuestionMessage, SentAnswer } from '../../types';
 
 @Component({
   selector: 'app-question-answers',
@@ -9,15 +9,20 @@ import { QuestionMessage } from '../../types';
 })
 export class QuestionAnswersComponent {
   @Input() message: QuestionMessage;
+  @Output() onSubmit = new EventEmitter<SentAnswer>();
 
   answersForm = this.formBuilder.group({
-    options: '',
+    answers: '',
   });
 
   constructor(private formBuilder: FormBuilder) {}
 
-  onSubmit(): void {
-    console.log('value', this.answersForm.value);
+  handleSubmit() {
+    const { answers } = this.answersForm.value;
+
+    this.onSubmit.emit({
+      [answers]: 1,
+    });
   }
 
   get isRadioQuestion(): boolean {

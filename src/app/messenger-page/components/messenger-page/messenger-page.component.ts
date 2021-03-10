@@ -4,8 +4,10 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/state';
 import { updateAuthGrant } from 'src/app/state/auth.actions';
+import { createAnswerMessage } from '../../lib';
+import { sendMessage } from '../../state/conversation.actions';
 import { selectMessages } from '../../state/conversation.selectors';
-import { ReceivedMessage } from '../../types';
+import { QuestionMessage, ReceivedMessage, SentAnswer } from '../../types';
 import { isQuestionMessage, isStatementMessage } from '../../types/guards';
 
 @Component({
@@ -27,6 +29,14 @@ export class MessengerPageComponent implements OnInit {
     if (id) {
       this.store.dispatch(updateAuthGrant({ id }));
     }
+  }
+
+  submitAnswers(message: QuestionMessage, answers: SentAnswer) {
+    this.store.dispatch(
+      sendMessage({
+        message: createAnswerMessage(message.question_id, answers),
+      }),
+    );
   }
 
   getText(message: any): string {

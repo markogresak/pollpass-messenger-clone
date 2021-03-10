@@ -5,4 +5,4 @@ export type {
   ReceivedMessage,
   StatementMessage,
 } from './received-message';
-export type { SentMessage } from './sent-message';
+export type { SentAnswer, AnswerMessage, SentMessage } from './sent-message';

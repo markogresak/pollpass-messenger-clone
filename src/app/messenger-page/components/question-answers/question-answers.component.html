@@ -1,9 +1,9 @@
-<form [formGroup]="answersForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="answersForm" (ngSubmit)="handleSubmit()">
   <div class="question-answers__title" [innerHTML]="message.name_html"></div>
 
   <mat-radio-group
     *ngIf="isRadioQuestion"
-    formControlName="options"
+    formControlName="answers"
     required
     color="primary"
   >
