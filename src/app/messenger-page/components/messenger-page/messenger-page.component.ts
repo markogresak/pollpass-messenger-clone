@@ -47,11 +47,6 @@ export class MessengerPageComponent implements OnInit {
     );
   }
 
-  getText(message: any): string {
-    // HACK: this is temporary testing code
-    return message.text_html || message.name_html;
-  }
-
   private getRouteId(): string | null {
     return this.route.snapshot.paramMap.get('id');
   }
