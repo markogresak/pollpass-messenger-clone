@@ -11,9 +11,11 @@ import { AppComponent } from './app.component';
 import { reducers, metaReducers } from './state';
 import { AuthEffects } from './state/auth.effects';
 import { MessengerPageComponent, ConversationEffects } from './messenger-page';
+import { StatementMessageComponent } from './messenger-page/components/statement-message/statement-message/statement-message.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
-  declarations: [AppComponent, MessengerPageComponent],
+  declarations: [AppComponent, MessengerPageComponent, StatementMessageComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -21,6 +23,7 @@ import { MessengerPageComponent, ConversationEffects } from './messenger-page';
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([AuthEffects, ConversationEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
