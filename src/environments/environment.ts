@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiBase: 'https://api-testing.pollpass.com',
+  wsBase: 'wss://neo-testing.pollpass.com',
 };
 
 /*
