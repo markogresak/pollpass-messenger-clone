@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { ReceivedMessage } from '../types';
 import { isHeartbeatMessage, isHistoryMessage } from '../types/guards';
-import { goodBye, addMessage } from './conversation.actions';
+import { goodBye, addMessage, addHistory } from './conversation.actions';
 
 export const conversationFeatureKey = 'conversation';
 
@@ -17,16 +17,13 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
+  on(addHistory, (state, { message }) => ({
+    ...state,
+    messages: message.messages,
+  })),
   on(addMessage, (state, { message }) => {
-    if (isHistoryMessage(message)) {
-      return {
-        ...state,
-        messages: message.messages,
-      };
-    }
-
     if (isHeartbeatMessage(message)) {
-      // We do not want to store heartbeat messages.
+      // Do not store heartbeat messages for testing case.
       return state;
     }
 

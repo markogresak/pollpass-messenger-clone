@@ -1,8 +1,9 @@
 import { createAction, props } from '@ngrx/store';
-import { ReceivedMessage, SentMessage } from '../types';
+import { HistoryMessage, ReceivedMessage, SentMessage } from '../types';
 
-export const beginConversation = createAction(
-  '[Conversation] Begin Conversation',
+export const addHistory = createAction(
+  '[Conversation] Add History',
+  props<{ message: HistoryMessage }>(),
 );
 
 export const addMessage = createAction(

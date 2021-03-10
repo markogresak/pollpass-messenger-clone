@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { mergeMap, map, catchError, exhaustMap } from 'rxjs/operators';
+import { map, catchError, exhaustMap } from 'rxjs/operators';
 import { updateAuthGrantSuccess } from 'src/app/state/auth.actions';
-import { isGoodByeMessage } from '../types/guards/is-received-message';
+import {
+  isGoodByeMessage,
+  isHistoryMessage,
+} from '../types/guards/is-received-message';
 import {
   goodBye,
   addMessage,
   addMessageFailure,
   sendMessage,
+  addHistory,
 } from './conversation.actions';
 import { ConversationService } from './conversation.service';
 
@@ -20,11 +24,15 @@ export class ConversationEffects {
       exhaustMap(({ authGrant }) =>
         this.conversation.connect(authGrant.access_token).pipe(
           map((message) => {
+            if (isHistoryMessage(message)) {
+              return addHistory({ message });
+            }
             if (isGoodByeMessage(message)) {
               return goodBye();
             }
             return addMessage({ message });
           }),
+          catchError((error) => of(addMessageFailure({ error }))),
         ),
       ),
     ),
