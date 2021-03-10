@@ -128,5 +128,8 @@
       }
     }
   },
-  "defaultProject": "pollpass-messenger-clone"
+  "defaultProject": "pollpass-messenger-clone",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
