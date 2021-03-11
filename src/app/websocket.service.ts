@@ -7,7 +7,7 @@ import {
   WebSocketSubjectConfig,
 } from 'rxjs/webSocket';
 
-const RETRY_DELAY = 500000;
+const RETRY_DELAY = 10000;
 
 @Injectable({
   providedIn: 'root',
