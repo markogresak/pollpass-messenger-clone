@@ -13,6 +13,7 @@ import {
   updateAuthGrantFailure,
   updateAuthGrantSuccess,
 } from './auth.actions';
+import { isValidAuthGrant } from './lib';
 import { selectCurrentRoute } from './router.selectors';
 
 @Injectable()
@@ -64,7 +65,7 @@ export class AuthEffects {
 
   private getAuthGrant(id: string): Observable<AuthGrant> {
     const storedAuthGrant = this.storage.get(AuthEffects.AUTH_GRANT_KEY);
-    if (storedAuthGrant && this.auth.isValidAuthGrant(storedAuthGrant)) {
+    if (storedAuthGrant && isValidAuthGrant(storedAuthGrant)) {
       return of(storedAuthGrant);
     }
     return this.auth.createMagicLink(id);
