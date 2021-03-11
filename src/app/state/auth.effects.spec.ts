@@ -4,6 +4,7 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
 
 import { AuthEffects } from './auth.effects';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 describe('AuthEffects', () => {
   let actions$: Observable<any>;
@@ -12,9 +13,15 @@ describe('AuthEffects', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [AuthEffects, provideMockActions(() => actions$)],
+      providers: [
+        AuthEffects,
+        provideMockActions(() => actions$),
+        provideMockStore({
+          initialState: {},
+        }),
+      ],
     });
-
+    TestBed.inject(MockStore);
     effects = TestBed.inject(AuthEffects);
   });
 
