@@ -120,4 +120,22 @@ describe('AuthEffects', () => {
       });
     });
   });
+
+  it('should store authGrant after updateAuthGrantSuccess', () => {
+    testScheduler.run(({ hot, flush }) => {
+      actions$ = hot('(a-)', {
+        a: updateAuthGrantSuccess({ authGrant: mockAuthGrant }),
+      });
+
+      // We have to manually subscribe because non-dispatching events
+      // do not appear in the effects stream.
+      effects.updateAuthGrantSuccess$.subscribe();
+      flush();
+
+      expect(storageService.set).toHaveBeenCalledOnceWith(
+        'authGrant',
+        mockAuthGrant,
+      );
+    });
+  });
 });
