@@ -18,12 +18,14 @@ import { AuthEffects } from './state/auth.effects';
 import { ConversationEffects, MessengerPageComponent } from './messenger-page';
 import { QuestionAnswersComponent } from './messenger-page/components/question-answers/question-answers.component';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { HomePageComponent } from './home-page/home-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MessengerPageComponent,
     QuestionAnswersComponent,
+    HomePageComponent,
   ],
   imports: [
     BrowserModule,
