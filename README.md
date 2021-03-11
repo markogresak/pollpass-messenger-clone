@@ -1,4 +1,4 @@
-# PollpassMessengerClone
+# PollpassMessengerClone ![Node.js CI](https://github.com/markogresak/pollpass-messenger-clone/workflows/Node.js%20CI/badge.svg)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.2.
 
