@@ -7,15 +7,7 @@ import {
 import { AuthService } from './auth.service';
 import { AuthGrant } from './types';
 import { environment } from 'src/environments/environment';
-
-const mockMagicLinkResponse: AuthGrant = {
-  access_token: 'some-access-token',
-  token_type: 'Bearer',
-  expires_in: 21600,
-  refresh_token: 'some-refresh-token',
-  scope: 'magic_link',
-  created_at: 1615353517,
-};
+import { mockAuthGrant } from './fixtures/mockAuthGrant';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -39,9 +31,9 @@ describe('AuthService', () => {
 
     http
       .expectOne(`${environment.apiBase}/auth/magic_link/${id}`)
-      .flush(mockMagicLinkResponse);
+      .flush(mockAuthGrant);
 
     // @ts-ignore
-    expect(actualResponse).toEqual(mockMagicLinkResponse);
+    expect(actualResponse).toEqual(mockAuthGrant);
   });
 });
