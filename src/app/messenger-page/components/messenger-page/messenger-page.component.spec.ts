@@ -4,6 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 
 import { MessengerPageComponent } from './messenger-page.component';
+import { AppState } from 'src/app/state';
 
 describe('MessengerPageComponent', () => {
   let component: MessengerPageComponent;
@@ -15,8 +16,14 @@ describe('MessengerPageComponent', () => {
       declarations: [MessengerPageComponent],
       imports: [HttpClientTestingModule, RouterTestingModule],
       providers: [
-        provideMockStore({
-          initialState: {},
+        provideMockStore<Partial<AppState>>({
+          initialState: {
+            conversation: {
+              messages: [],
+              activeQuestionId: null,
+              isDone: false,
+            },
+          },
         }),
       ],
     }).compileComponents();

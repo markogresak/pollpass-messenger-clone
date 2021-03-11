@@ -3,7 +3,7 @@ import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { catchError, exhaustMap, filter, map, switchMap } from 'rxjs/operators';
+import { catchError, exhaustMap, filter, map } from 'rxjs/operators';
 import { AppState } from '.';
 import { AuthService } from '../auth.service';
 import { StorageService } from '../storage.service';
@@ -23,12 +23,11 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(routerNavigatedAction),
       concatLatestFrom(() => this.store.select(selectCurrentRoute)),
-      filter(([, { routeConfig, params }]) => {
-        return routeConfig.path === 'm/:id' && typeof params.id === 'string';
-      }),
-      map(([, { params }]) => {
-        return updateAuthGrant({ id: params.id });
-      }),
+      filter(
+        ([, { routeConfig, params }]) =>
+          routeConfig.path === 'm/:id' && typeof params.id === 'string',
+      ),
+      map(([, { params }]) => updateAuthGrant({ id: params.id })),
     ),
   );
 
