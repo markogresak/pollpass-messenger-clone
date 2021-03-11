@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { routerNavigatedAction } from '@ngrx/router-store';
+import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { catchError, exhaustMap, map } from 'rxjs/operators';
+import { catchError, exhaustMap, filter, map, switchMap } from 'rxjs/operators';
+import { AppState } from '.';
 import { AuthService } from '../auth.service';
 import { StorageService } from '../storage.service';
 import { AuthGrant } from '../types';
@@ -10,10 +13,24 @@ import {
   updateAuthGrantFailure,
   updateAuthGrantSuccess,
 } from './auth.actions';
+import { selectCurrentRoute } from './router.selectors';
 
 @Injectable()
 export class AuthEffects {
   private static readonly AUTH_GRANT_KEY = 'authGrant';
+
+  startUpdateAuthGrant$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(routerNavigatedAction),
+      concatLatestFrom(() => this.store.select(selectCurrentRoute)),
+      filter(([, { routeConfig, params }]) => {
+        return routeConfig.path === 'm/:id' && typeof params.id === 'string';
+      }),
+      map(([, { params }]) => {
+        return updateAuthGrant({ id: params.id });
+      }),
+    ),
+  );
 
   updateAuthGrant$ = createEffect(() =>
     this.actions$.pipe(
@@ -43,6 +60,7 @@ export class AuthEffects {
     private actions$: Actions,
     private auth: AuthService,
     private storage: StorageService<AuthGrant>,
+    private store: Store<AppState>,
   ) {}
 
   private getAuthGrant(id: string): Observable<AuthGrant> {

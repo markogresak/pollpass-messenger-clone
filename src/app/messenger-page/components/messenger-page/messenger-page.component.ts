@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/state';
-import { updateAuthGrant } from 'src/app/state/auth.actions';
 import { createAnswerMessage } from '../../lib';
 import { sendMessage } from '../../state/conversation.actions';
 import {
@@ -28,7 +26,7 @@ import {
   templateUrl: './messenger-page.component.html',
   styleUrls: ['./messenger-page.component.scss'],
 })
-export class MessengerPageComponent implements OnInit {
+export class MessengerPageComponent {
   isAnswerViewMessage = isAnswerViewMessage;
   isQuestionMessage = isQuestionMessage;
   isStatementMessage = isStatementMessage;
@@ -39,15 +37,7 @@ export class MessengerPageComponent implements OnInit {
   );
   isDone$: Observable<boolean> = this.store.select(selectIsDone);
 
-  constructor(private route: ActivatedRoute, private store: Store<AppState>) {}
-
-  ngOnInit(): void {
-    const id = this.getRouteId();
-
-    if (id) {
-      this.store.dispatch(updateAuthGrant({ id }));
-    }
-  }
+  constructor(private store: Store<AppState>) {}
 
   submitAnswers(message: QuestionMessage, answers: SentAnswer) {
     this.store.dispatch(
@@ -59,9 +49,5 @@ export class MessengerPageComponent implements OnInit {
 
   getAnswerHtml(message: AnswerViewMessage): string {
     return message.answers.map((answer) => answer.text_html).join('');
-  }
-
-  private getRouteId(): string | null {
-    return this.route.snapshot.paramMap.get('id');
   }
 }
