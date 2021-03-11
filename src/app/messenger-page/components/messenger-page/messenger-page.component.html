@@ -19,7 +19,7 @@
         (activeQuestionId$ | async) === message.question_id
       "
       [message]="message"
-      (onSubmit)="submitAnswers(message, $event)"
+      (submitAnswers)="submitAnswers(message, $event)"
     ></app-question-answers>
     <div
       *ngIf="isAnswerViewMessage(message)"
@@ -29,7 +29,9 @@
 
     <div
       class="messenger__message messenger__message--loading"
-      *ngIf="isLast && isStatementMessage(message) && !(isDone$ | async)"
+      *ngIf="
+        isLast && isStatementMessage(message) && (isDone$ | async) === false
+      "
     >
       <span class="messenger__loading-dot"></span>
       <span class="messenger__loading-dot"></span>

@@ -11,7 +11,7 @@ import { QuestionMessage, SentAnswer } from '../../types';
 })
 export class QuestionAnswersComponent implements OnInit {
   @Input() message: QuestionMessage;
-  @Output() onSubmit = new EventEmitter<SentAnswer>();
+  @Output() submitAnswers = new EventEmitter<SentAnswer>();
 
   answersForm = this.formBuilder.group({
     multipleAnswers: new FormArray([]),
@@ -30,7 +30,7 @@ export class QuestionAnswersComponent implements OnInit {
     });
   }
 
-  handleSubmit(event: Event) {
+  handleSubmit(event: Event): void {
     event.preventDefault();
 
     if (!this.answersForm.valid) {
@@ -38,13 +38,13 @@ export class QuestionAnswersComponent implements OnInit {
     }
 
     if (this.isRadioQuestion) {
-      this.onSubmit.emit(
+      this.submitAnswers.emit(
         createRadioQuestionAnswer(this.answersForm.value.radioAnswer),
       );
     }
 
     if (this.isMultipleQuestion) {
-      this.onSubmit.emit(
+      this.submitAnswers.emit(
         createMultipleQuestionAnswer(
           this.answersForm.value.multipleAnswers,
           this.message.question_options,

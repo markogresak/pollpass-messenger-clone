@@ -39,7 +39,7 @@ export class MessengerPageComponent {
 
   constructor(private store: Store<AppState>) {}
 
-  submitAnswers(message: QuestionMessage, answers: SentAnswer) {
+  submitAnswers(message: QuestionMessage, answers: SentAnswer): void {
     this.store.dispatch(
       sendMessage({
         message: createAnswerMessage(message.question_id, answers),
