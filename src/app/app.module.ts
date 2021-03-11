@@ -17,6 +17,7 @@ import { reducers, metaReducers } from './state';
 import { AuthEffects } from './state/auth.effects';
 import { ConversationEffects, MessengerPageComponent } from './messenger-page';
 import { QuestionAnswersComponent } from './messenger-page/components/question-answers/question-answers.component';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { QuestionAnswersComponent } from './messenger-page/components/question-a
     MatButtonModule,
     MatCheckboxModule,
     MatRadioModule,
+    StoreRouterConnectingModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],
